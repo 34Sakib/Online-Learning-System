@@ -1,0 +1,21 @@
+{
+  "firstName": "Alif",
+  "lastName": "Mahamud",
+  "username": "alif",
+  "gender": "male",
+  "email": "alif@gmail.com",
+  "phoneNumber": "01637829418",
+  "password": "sakibvai12",
+  "dateOfBirth": "2001-01-01",
+  "role": "student"
+}
+
+{
+  "username": "alif",
+  "password": "sakibvai12"
+}
+
+{
+  "username": "sakib",
+  "password": "sakibvai12"
+}

@@ -1,0 +1,61 @@
+http://localhost:3000/user/signup [Post]
+http://localhost:3000/auth/login [post]
+http://localhost:3000/user/profile/update [post]
+http://localhost:3000/course/ [get]
+http://localhost:3000/course/id [patch, delete]
+http://localhost:3000/course/search [only url, post]
+
+http://localhost:3000/enroll
+
+
+
+
+{
+  "title": "Introduction to Database",
+  "instructor": "Shadman",
+  "startingdate": "2025-05-15T09:00:00.000Z",
+  "type": "online",
+  "status": "available"
+}
+
+
+{
+  "firstName": "Sakib",
+  "lastName": "Mahamud",
+  "username": "mahamud",
+  "gender": "male",
+  "email": "mahamud@gmail.com",
+  "phoneNumber": "01641655173",
+  "password": "sakibvai12",
+  "dateOfBirth": "2000-01-01",
+  "role": "student"
+}
+{
+  "firstName": "Shadman",
+  "lastName": "Mahamud",
+  "username": "shadman",
+  "gender": "male",
+  "email": "shadman@gmail.com",
+  "phoneNumber": "01641655173",
+  "password": "sakibvai12",
+  "dateOfBirth": "2002-01-01",
+  "role": "admin"
+}
+
+{
+  "username": "johndoe",
+  "password": "password",
+}
+{
+  "courseId": 2,
+  "payment": 5000
+}
+{
+  "username": "mahamud",
+  "password": "sakibvai12"
+}
+
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6...
+
+
+npm install @nestjs/mapped-types
