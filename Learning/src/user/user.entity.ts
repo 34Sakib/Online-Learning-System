@@ -30,5 +30,5 @@ export class User {
   dateOfBirth: Date;
 
   @Column()
-  role: string; // Admin, Librarian, Student
+  role: string; // Admin, Student
 }

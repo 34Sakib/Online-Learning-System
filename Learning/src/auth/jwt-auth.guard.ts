@@ -3,6 +3,7 @@ import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { IS_PUBLIC_KEY } from './public.decorator';
+import { isTokenBlacklisted } from './token-blacklist';
 
 @Injectable()
 export class JwtAuthGuard extends AuthGuard('jwt') {
@@ -17,6 +18,13 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     ]);
     if (isPublic) {
       return true;
+    }
+    // Check if token is blacklisted
+    const req = context.switchToHttp().getRequest();
+    const authHeader = req.headers['authorization'];
+    const token = authHeader?.split(' ')[1];
+    if (token && isTokenBlacklisted(token)) {
+      return false;
     }
     return super.canActivate(context);
   }

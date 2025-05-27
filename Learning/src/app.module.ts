@@ -1,12 +1,15 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { CourseModule } from './Course/course.module';
 import { EnrollModule } from './Enroll/enroll.module';
+import { EmailVerificationModule } from './email-verification.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -21,6 +24,7 @@ import { EnrollModule } from './Enroll/enroll.module';
     AuthModule,
     CourseModule,
     EnrollModule,
+    EmailVerificationModule,
   ],
 })
 export class AppModule {}
