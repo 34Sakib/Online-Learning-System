@@ -9,7 +9,13 @@ export class Course {
   title: string;
 
   @Column()
+  description: string;
+
+  @Column()
   instructor: string;
+
+  @Column()
+  enrollmentDeadline: string;
 
   @Column()
   startingdate: Date;
@@ -19,4 +25,7 @@ export class Course {
 
   @Column({ default: 'available' })
   status: 'available' | 'filledup';
+
+  @Column({ type: 'float', default: 99 })
+  price: number;
 }

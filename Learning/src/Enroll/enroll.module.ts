@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Enroll } from './enroll.entity';
 import { EnrollService } from './enroll.service';
 import { EnrollController } from './enroll.controller';
-import { Course } from '../Course/course.entity';
+import { Course } from '../course/course.entity';
 import { User } from '../user/user.entity';
 
 @Module({

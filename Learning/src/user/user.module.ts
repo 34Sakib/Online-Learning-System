@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
+import { AdminDownloadController } from './admin.download.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { JwtModule } from '@nestjs/jwt';
@@ -18,7 +19,7 @@ import { EmailVerificationModule } from '../email-verification.module';
     }),
     EmailVerificationModule,
   ],
-  controllers: [UserController],
+  controllers: [UserController, AdminDownloadController],
   providers: [UserService, EmailService, EmailVerificationService],
   exports: [UserService], // <-- added
 })

@@ -44,8 +44,16 @@ export class UserService {
     return { message: 'User registered successfully!' };
   }
 
+  async findById(id: number) {
+    return this.usersRepository.findOne({ where: { id } });
+  }
+
   async findByUsername(username: string) {
     return this.usersRepository.findOne({ where: { username } });
+  }
+
+  async findByEmail(email: string) {
+    return this.usersRepository.findOne({ where: { email } });
   }
 
   async updateProfile(username: string, updateData: UpdateUserDto) {

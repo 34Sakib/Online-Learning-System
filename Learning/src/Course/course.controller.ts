@@ -8,7 +8,8 @@ import { Roles } from '../auth/roles.decorator';
 import { Public } from '../auth/public.decorator';
 import { SearchCourseDto } from './dto/search-course.dto';
 
-@Controller('Course')
+@Controller('course')
+@Controller('course')
 @UseGuards(JwtAuthGuard)
 export class CourseController {
   constructor(private readonly courseService: CourseService) {}
@@ -22,11 +23,13 @@ export class CourseController {
   }
 
   @Get()
+  @Public()
   findAll() {
-    return this.courseService.findAll();
+    return this.courseService.findAll().then(course => ({ course }));
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id') id: string) {
     return this.courseService.findOne(+id);
   }

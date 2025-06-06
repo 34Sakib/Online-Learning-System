@@ -5,7 +5,13 @@ export class CreateCourseDto {
   title: string;
 
   @IsString()
+  description: string;
+
+  @IsString()
   instructor: string;
+
+  @IsString()
+  enrollmentDeadline: string;
 
   @IsString()
   startingdate: Date;
