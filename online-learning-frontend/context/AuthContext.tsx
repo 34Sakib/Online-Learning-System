@@ -4,10 +4,10 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 interface User {
-  id: string;
+  id: number | string;
   name: string;
   email: string;
-  role: 'Student' | 'Admin';
+  role: string; // Accept any string for compatibility
 }
 
 interface AuthContextType {
@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       try {
         setToken(storedToken);
         const parsedUser = JSON.parse(storedUser);
+        // Always normalize role to lowercase for backend logic
         if (parsedUser && parsedUser.role) parsedUser.role = parsedUser.role.toLowerCase();
         setUser(parsedUser);
       } catch (e) {
@@ -61,7 +62,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (!userObj || !userObj.email) {
         throw new Error('Login failed: user object or email missing from response');
       }
-      userObj.role = userObj.role.charAt(0).toUpperCase() + userObj.role.slice(1).toLowerCase();
+      userObj.role = userObj.role.toLowerCase(); // Always lowercase for logic
       setToken(token);
       setUser(userObj);
       localStorage.setItem('token', token);

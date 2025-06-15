@@ -77,12 +77,10 @@ export default function PaymentPage() {
     try {
       const res = await axios.post('http://localhost:3000/payment/create-checkout-session', {
         courseId,
-        userEmail: user.email, // Assuming user object has email
-        courseName: course.title, // Sending course name for Stripe session
-        coursePrice: course.price || 9900, // Sending price (in cents), default to $99.00
+        userEmail: user.email
       }, {
         headers: {
-          Authorization: `Bearer ${token}`, // Token should be available if user is logged in
+          Authorization: `Bearer ${token}`,
         },
       });
       if (res.data.url) {
