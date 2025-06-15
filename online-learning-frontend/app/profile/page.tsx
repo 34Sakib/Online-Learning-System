@@ -304,45 +304,72 @@ export default function ProfilePage() {
         {/* Main Content */}
         <div className="bg-white rounded-b-3xl shadow-xl overflow-hidden">
           {/* Stats Section */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 md:p-6 bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 border-b">
-            {!isAdmin && (
-              <StatCard 
-                icon={<FaBookOpen className="text-xl" />}
-                title="Courses Enrolled"
-                value={enrolledCourses.length}
-                color="indigo"
-                gradient="from-indigo-500 to-purple-500"
-              />
+           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 md:p-6 bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 border-b">
+            {isAdmin ? (
+              <>
+                <StatCard 
+                  icon={<FaUsers className="text-xl" />}
+                  title="Total Students"
+                  value={studentEnrollments.length}
+                  color="blue"
+                  gradient="from-blue-500 to-cyan-500"
+                />
+                <StatCard 
+                  icon={<FaUserCircle className="text-xl" />}
+                  title="Active Students"
+                  value={studentEnrollments.filter(s => s.status === 'active').length}
+                  color="green"
+                  gradient="from-green-500 to-emerald-500"
+                />
+                <StatCard 
+                  icon={<FaChartLine className="text-xl" />}
+                  title="New This Month"
+                  value={studentEnrollments.filter(s => {
+                    // Only count if joinDate exists, is a valid date, and user is a student
+                    const joinDate = s.joinDate ? new Date(s.joinDate) : null;
+                    if (!joinDate || isNaN(joinDate.getTime())) return false;
+                    // If you have a role field, check for student
+                    if (s.role && s.role.toLowerCase() !== 'student') return false;
+                    const now = new Date();
+                    return joinDate.getMonth() === now.getMonth() && joinDate.getFullYear() === now.getFullYear();
+                  }).length}
+                  color="amber"
+                  gradient="from-amber-500 to-yellow-500"
+                />
+              </>
+            ) : (
+              <>
+                <StatCard 
+                  icon={<FaBookOpen className="text-xl" />}
+                  title="Courses Enrolled"
+                  value={enrolledCourses.length}
+                  color="indigo"
+                  gradient="from-indigo-500 to-purple-500"
+                />
+                <StatCard 
+                  icon={<FaGraduationCap className="text-xl" />}
+                  title="Courses Completed"
+                  value={stats.coursesCompleted}
+                  color="blue"
+                  gradient="from-blue-500 to-cyan-500"
+                />
+                <StatCard 
+                  icon={<FaCertificate className="text-xl" />}
+                  title="Certificates"
+                  value={stats.certificatesEarned}
+                  color="green"
+                  gradient="from-green-500 to-emerald-500"
+                />
+                <StatCard 
+                  icon={<FaClock className="text-xl" />}
+                  title="Learning Hours"
+                  value={stats.learningHours}
+                  color="amber"
+                  gradient="from-amber-500 to-yellow-500"
+                />
+              </>
             )}
-            <StatCard 
-              icon={<FaUsers className="text-xl" />}
-              title="Total Students"
-              value={isAdmin ? studentEnrollments.length : stats.coursesCompleted}
-              color="blue"
-              gradient="from-blue-500 to-cyan-500"
-            />
-            <StatCard 
-              icon={<FaUserCircle className="text-xl" />}
-              title="Active Students"
-              value={isAdmin ? studentEnrollments.filter(s => s.status === 'active').length : stats.certificatesEarned}
-              color="green"
-              gradient="from-green-500 to-emerald-500"
-            />
-            <StatCard 
-              icon={<FaChartLine className="text-xl" />}
-              title="New This Month"
-              value={isAdmin ? studentEnrollments.filter(s => {
-                // Only count if joinDate exists, is a valid date, and user is a student
-                const joinDate = s.joinDate ? new Date(s.joinDate) : null;
-                if (!joinDate || isNaN(joinDate.getTime())) return false;
-                // If you have a role field, check for student
-                if (s.role && s.role.toLowerCase() !== 'student') return false;
-                const now = new Date();
-                return joinDate.getMonth() === now.getMonth() && joinDate.getFullYear() === now.getFullYear();
-              }).length : stats.learningHours}
-              color="amber"
-              gradient="from-amber-500 to-yellow-500"
-            />
+          
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 p-6">
