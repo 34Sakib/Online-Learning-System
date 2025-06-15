@@ -5,6 +5,9 @@ export class Enroll {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
   @Column()
   studentId: number;
 

@@ -46,8 +46,32 @@ export class EnrollService {
   }
 
   async getEnrolledCourses(user: any) {
-    const enrollments = await this.enrollRepository.find({ where: { studentId: user.id } });
-    return { courses: enrollments };
+    console.log('DEBUG getEnrolledCourses user:', user);
+    const enrollments = await this.enrollRepository.find();
+    const courseIds = enrollments.map(e => e.courseId);
+    const courses = await this.courseRepository.findByIds(courseIds);
+    const filtered = enrollments
+      .filter(e => Number(e.studentId) === Number(user.id))
+      .map(e => {
+        const course = courses.find(c => c.id === e.courseId);
+        let startDate: Date | undefined = undefined;
+        let endDate: Date | undefined = undefined;
+        if (course?.startingdate) {
+          const start = new Date(course.startingdate);
+          const end = new Date(start);
+          end.setDate(start.getDate() + 30); // Default to 30 days duration
+          startDate = start;
+          endDate = end;
+        }
+        return {
+          ...e,
+          startDate: startDate?.toISOString(),
+          endDate: endDate?.toISOString(),
+          // Optionally include more course fields if needed
+        };
+      });
+    console.log('DEBUG getEnrolledCourses filtered:', filtered);
+    return { courses: filtered };
   }
 
   async getAllEnrollments() {
@@ -68,9 +92,12 @@ export class EnrollService {
         firstName: user?.firstName || '',
         lastName: user?.lastName || '',
         email: user?.email || '',
-        joinDate: user?.dateOfBirth || null, // or another join date field if available
+        joinDate: user?.createdAt || null, // account creation date for filtering new students this month
         status: 'active', // or derive from user/entity if needed
-        courses: studentEnrolls.map(e => ({ name: e.courseName }))
+        courses: studentEnrolls.map(e => ({
+        name: e.courseName,
+        enrolledAt: e.createdAt ? e.createdAt.toISOString?.() || e.createdAt : null
+      }))
       };
     });
     return grouped;
